@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#000000" />
+<title>ZYE TEAM OFFICIAL</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto">
+  <source src="https://upload.zireku.com/get/QLbx5D.mp4" type="video/mp4" />
+</video>
+<div class="bg-overlay"></div>
+<div id="toast" class="toast"></div>
+
+<div class="app-shell">
+
+  <!-- PAGE 1: KEY SYSTEM -->
+  <section id="page-key" class="page active">
+    <div class="page-content">
+      <div class="brand">
+        <div class="brand-badge">Z</div>
+        <h1 class="brand-title">ZYE TEAM OFFICIAL</h1>
+        <p class="brand-sub">PREMIUM ACCESS SYSTEM</p>
+      </div>
+
+      <div class="glass-card key-card">
+        <label class="field-label">ENTER YOUR KEY</label>
+        <input id="keyInput" class="text-input" type="text" placeholder="Masukkan Key" autocomplete="off" autocapitalize="off" spellcheck="false" />
+        <button id="pasteBtn" class="btn btn-ghost">PASTE KEY</button>
+        <button id="validateBtn" class="btn btn-primary">VALIDASI KEY</button>
+        <div id="keyStatus" class="key-status"></div>
+        <button id="continueBtn" class="btn btn-continue hidden">LANJUT →</button>
+      </div>
+
+      <div class="social-row">
+        <a class="social-btn" data-url="https://whatsapp.com/channel/0029Vb72gOz4dTnLFa0Gen0G" href="javascript:void(0)">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20.52 3.48A11.9 11.9 0 0012 0C5.37 0 0 5.37 0 12c0 2.11.55 4.17 1.6 5.98L0 24l6.2-1.62A11.94 11.94 0 0012 24c6.63 0 12-5.37 12-12 0-3.2-1.25-6.21-3.48-8.52z"/></svg>
+          <span>WHATSAPP</span>
+        </a>
+        <a class="social-btn" data-url="https://tiktok.com/@zyehyper" href="javascript:void(0)">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M16.5 3a5.5 5.5 0 004.5 4.5v3a8.5 8.5 0 01-4.5-1.4v6.4a6.5 6.5 0 11-6.5-6.5c.34 0 .67.03 1 .09v3.16a3.5 3.5 0 102.5 3.25V3h3z"/></svg>
+          <span>TIKTOK</span>
+        </a>
+        <a class="social-btn" data-url="https://t.me/KAIZYE_STORE" href="javascript:void(0)">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+          <span>TELEGRAM</span>
+        </a>
+      </div>
+    </div>
+    <footer class="app-footer">©ZyeCitedz</footer>
+  </section>
+
+  <!-- PAGE 2: CONTROL PANEL -->
+  <section id="page-home" class="page">
+    <div class="page-content">
+      <div class="page-head">
+        <h2 class="page-title">ZYE TEAM OFFICIAL</h2>
+        <p class="page-sub">CONTROL PANEL</p>
+      </div>
+
+      <div class="ctrl-grid">
+        <div class="ctrl-card" data-key="aimlock">
+          <div class="ctrl-top"><span class="ctrl-name">AIMLOCK</span><span class="ctrl-state">OFF</span></div>
+          <div class="switch"><div class="knob"></div></div>
+        </div>
+        <div class="ctrl-card" data-key="esp">
+          <div class="ctrl-top"><span class="ctrl-name">ESP</span><span class="ctrl-state">OFF</span></div>
+          <div class="switch"><div class="knob"></div></div>
+        </div>
+        <div class="ctrl-card" data-key="bodyhs">
+          <div class="ctrl-top"><span class="ctrl-name">BODY HS</span><span class="ctrl-state">OFF</span></div>
+          <div class="switch"><div class="knob"></div></div>
+        </div>
+      </div>
+
+      <button id="launchBtn" class="btn btn-launch">LAUNCH</button>
+
+      <div class="glass-card shizuku-card">
+        <div class="row-between">
+          <span class="ctrl-name">SHIZUKU STATUS</span>
+          <span id="shizukuState" class="pill">NOT CONNECTED</span>
+        </div>
+        <button id="shizukuBtn" class="btn btn-ghost">REQUEST SHIZUKU</button>
+      </div>
+    </div>
+    <footer class="app-footer">©ZyeCitedz</footer>
+  </section>
+
+  <!-- PAGE 3: STORE -->
+  <section id="page-store" class="page">
+    <div class="page-content">
+      <div class="page-head">
+        <h2 class="page-title">ZYE TEAM STORE</h2>
+        <p class="page-sub">PREMIUM FILE &amp; MODULE</p>
+      </div>
+      <div id="storeList" class="store-list"></div>
+    </div>
+    <footer class="app-footer">©ZyeCitedz</footer>
+  </section>
+
+  <!-- PAGE 4: INFO -->
+  <section id="page-info" class="page">
+    <div class="page-content">
+      <div class="page-head">
+        <h2 class="page-title">ZYE TEAM OFFICIAL</h2>
+        <p class="page-sub">OFFICIAL INFORMATION CENTER</p>
+      </div>
+      <div class="glass-card info-card">
+        <a class="social-btn wide" data-url="https://whatsapp.com/channel/0029Vb72gOz4dTnLFa0Gen0G" href="javascript:void(0)"><span>WHATSAPP</span></a>
+        <a class="social-btn wide" data-url="https://tiktok.com/@zyehyper" href="javascript:void(0)"><span>TIKTOK</span></a>
+        <a class="social-btn wide" data-url="https://t.me/KAIZYE_STORE" href="javascript:void(0)"><span>TELEGRAM</span></a>
+      </div>
+    </div>
+    <footer class="app-footer">©ZyeCitedz</footer>
+  </section>
+
+  <!-- PAGE 5: PAYMENT -->
+  <section id="page-pay" class="page">
+    <div class="page-content">
+      <div class="page-head">
+        <h2 class="page-title">SCAN QR TO PAY</h2>
+        <p class="page-sub" id="payProduct">—</p>
+      </div>
+      <div class="glass-card pay-card">
+        <div class="qr-wrap">
+          <img src="https://upload.zireku.com/get/eSiZqD.jpg" alt="QR Payment" class="qr-img" onerror="this.style.opacity='0.15'" />
+        </div>
+        <div class="timer" id="payTimer">05:00</div>
+        <p class="muted small">TIME LIMIT</p>
+        <button id="paidBtn" class="btn btn-primary">SUDAH BAYAR</button>
+        <button id="proofBtn" class="btn btn-ghost">KIRIM BUKTI PEMBAYARAN</button>
+        <button id="backStoreBtn" class="btn btn-ghost">← KEMBALI</button>
+      </div>
+    </div>
+    <footer class="app-footer">©ZyeCitedz</footer>
+  </section>
+
+  <!-- BOTTOM NAV -->
+  <nav id="bottomNav" class="bottom-nav hidden">
+    <button class="nav-btn active" data-page="page-home">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/></svg>
+      <span>HOME</span>
+    </button>
+    <button class="nav-btn" data-page="page-store">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M4 4h16l-1.5 12H5.5zM6 20a2 2 0 104 0 2 2 0 00-4 0zm8 0a2 2 0 104 0 2 2 0 00-4 0z"/></svg>
+      <span>STORE</span>
+    </button>
+    <button class="nav-btn" data-page="page-info">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9a10 10 0 100 20 10 10 0 000-20z"/></svg>
+      <span>INFO</span>
+    </button>
+  </nav>
+
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal hidden">
+  <div class="modal-card">
+    <h3 class="modal-title">CONFIRM PURCHASE</h3>
+    <div class="modal-body">
+      <div class="modal-line"><span>Produk</span><b id="modalName">—</b></div>
+      <div class="modal-line"><span>Harga</span><b id="modalPrice">—</b></div>
+    </div>
+    <button id="modalContinue" class="btn btn-primary">CONTINUE PAYMENT</button>
+    <button id="modalCancel" class="btn btn-ghost">CANCEL</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
