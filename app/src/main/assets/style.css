@@ -89,19 +89,27 @@ body{
 
 /* ============ BRAND ============ */
 .brand{ text-align:center; margin:32px 0 28px; }
+
 .brand-badge{
-  width:64px; height:64px;
-  border-radius:20px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:800;
-  font-size:28px;
-  color:#000;
-  background:linear-gradient(145deg,#fff,#c8c8c8);
-  box-shadow:0 8px 30px rgba(255,255,255,.18), inset 0 -3px 0 rgba(0,0,0,.15);
-  margin-bottom:16px;
+  width: 90px;
+  height: 90px;
+  border-radius: 22px;
+  display: inline-block;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 8px 30px rgba(255,255,255,.18), inset 0 -3px 0 rgba(0,0,0,.15);
+  margin-bottom: 16px;
+  position: relative;
 }
+.brand-badge img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
 .brand-title{ font-size:24px; font-weight:800; letter-spacing:2px; }
 .brand-sub{ margin-top:6px; font-size:11px; letter-spacing:3px; color:var(--txt-dim); }
 
