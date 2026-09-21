@@ -205,6 +205,22 @@ body{
   border-radius:var(--r-lg);
 }
 
+/* ============ BUTTON GET KEY ============ */
+.btn-getkey{
+  background:linear-gradient(145deg,#0a1a0a,#001a0a);
+  color:#7CFC8B;
+  border:1px solid rgba(124,252,139,.5);
+  margin-top:14px;
+  box-shadow:0 0 20px rgba(124,252,139,.15);
+  font-weight:800;
+  letter-spacing:3px;
+}
+.btn-getkey:active{
+  background:linear-gradient(145deg,#001a0a,#0a1a0a);
+  border-color:#7CFC8B;
+  box-shadow:0 0 30px rgba(124,252,139,.3);
+}
+
 /* ============ KEY STATUS ============ */
 .key-status{
   text-align:center;
