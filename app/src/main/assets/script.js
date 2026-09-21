@@ -33,6 +33,7 @@ async function isKeyValid(input){
 
 /* ============ STATE ============ */
 const WA_PROOF = "https://wa.me/628817789861";
+const GET_KEY_URL = "https://get-key-proxy.vercel.app/";
 
 const state = {
   keyValid: false,
@@ -92,6 +93,7 @@ function initKeySystem(){
   const validateBtn = document.getElementById("validateBtn");
   const continueBtn = document.getElementById("continueBtn");
   const keyStatus = document.getElementById("keyStatus");
+  const getKeyBtn = document.getElementById("getKeyBtn");
 
   if(!keyInput || !validateBtn) return;
 
@@ -105,7 +107,6 @@ function initKeySystem(){
       return;
     }
 
-    // Validasi via hash — key asli TIDAK ADA di kode
     const valid = await isKeyValid(v);
 
     if(valid){
@@ -154,6 +155,13 @@ function initKeySystem(){
     continueBtn.addEventListener("click", function(){
       if(!state.keyValid){ toast("KEY INVALID"); return; }
       go("page-home");
+    });
+  }
+
+  /* GET KEY BUTTON */
+  if(getKeyBtn){
+    getKeyBtn.addEventListener("click", function(){
+      openExternal(GET_KEY_URL);
     });
   }
 }
@@ -342,7 +350,7 @@ function renderStore(){
     group.items.forEach(function(it){
       const card = document.createElement("div");
       card.className = "product-card";
-      card.innerHTML = 
+      card.innerHTML =
         '<div class="pc-head">' +
           '<div class="pc-name">' + it.name + '</div>' +
           '<div class="pc-price">' + it.price + '</div>' +
