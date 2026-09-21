@@ -2,6 +2,7 @@ package com.zyeteam.official
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -28,6 +29,15 @@ class MainActivity : AppCompatActivity() {
         s.domStorageEnabled = true
         s.allowFileAccess = true
         s.allowContentAccess = true
+        s.mediaPlaybackRequiresUserGesture = false
+        s.setRenderPriority(WebSettings.RenderPriority.HIGH)
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            s.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            s.mediaPlaybackRequiresUserGesture = false
+        }
 
         webView!!.webChromeClient = WebChromeClient()
         webView!!.webViewClient = WebViewClient()
