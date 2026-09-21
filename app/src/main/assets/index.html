@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content" />
 <meta name="theme-color" content="#000000" />
 <title>ZYE TEAM OFFICIAL</title>
 <link rel="stylesheet" href="style.css" />
@@ -21,14 +21,16 @@
   <section id="page-key" class="page active">
     <div class="page-content">
       <div class="brand">
-        <div class="brand-badge">Z</div>
+        <div class="brand-badge">
+          <img src="logo.png" alt="ZYE" />
+        </div>
         <h1 class="brand-title">ZYE TEAM OFFICIAL</h1>
         <p class="brand-sub">PREMIUM ACCESS SYSTEM</p>
       </div>
 
       <div class="glass-card key-card">
         <label class="field-label">ENTER YOUR KEY</label>
-        <input id="keyInput" class="text-input" type="text" placeholder="Masukkan Key" autocomplete="off" autocapitalize="off" spellcheck="false" />
+        <input id="keyInput" class="text-input" type="text" placeholder="Masukkan Key" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" />
         <button id="pasteBtn" class="btn btn-ghost">PASTE KEY</button>
         <button id="validateBtn" class="btn btn-primary">VALIDASI KEY</button>
         <div id="keyStatus" class="key-status"></div>
