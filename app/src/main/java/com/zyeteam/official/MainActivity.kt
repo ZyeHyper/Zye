@@ -30,13 +30,17 @@ class MainActivity : AppCompatActivity() {
         s.allowFileAccess = true
         s.allowContentAccess = true
         s.mediaPlaybackRequiresUserGesture = false
-        s.setRenderPriority(WebSettings.RenderPriority.HIGH)
-        
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            s.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-        }
+        s.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        s.cacheMode = WebSettings.LOAD_DEFAULT
+        s.loadsImagesAutomatically = true
+        s.blockNetworkImage = false
+        s.blockNetworkLoads = false
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             s.mediaPlaybackRequiresUserGesture = false
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            s.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
 
         webView!!.webChromeClient = WebChromeClient()
@@ -47,11 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         val wv = webView
-        if (wv != null && wv.canGoBack()) {
-            wv.goBack()
-        } else {
-            super.onBackPressed()
-        }
+        if (wv != null && wv.canGoBack()) wv.goBack() else super.onBackPressed()
     }
 
     inner class Bridge(private val ctx: Context) {
@@ -61,9 +61,7 @@ class MainActivity : AppCompatActivity() {
                 val i = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 ctx.startActivity(i)
-            } catch (e: Exception) {
-                Toast.makeText(ctx, "Link error", Toast.LENGTH_SHORT).show()
-            }
+            } catch (e: Exception) {}
         }
 
         @JavascriptInterface
@@ -71,9 +69,7 @@ class MainActivity : AppCompatActivity() {
             return try {
                 val cm = ctx.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 cm.primaryClip?.getItemAt(0)?.text?.toString() ?: ""
-            } catch (e: Exception) {
-                ""
-            }
+            } catch (e: Exception) { "" }
         }
 
         @JavascriptInterface
@@ -94,11 +90,8 @@ class MainActivity : AppCompatActivity() {
         fun requestShizuku() {}
 
         private fun isInstalled(pkg: String): Boolean = try {
-            ctx.packageManager.getPackageInfo(pkg, 0)
-            true
-        } catch (e: Exception) {
-            false
-        }
+            ctx.packageManager.getPackageInfo(pkg, 0); true
+        } catch (e: Exception) { false }
 
         private fun launchPkg(pkg: String) {
             try {
