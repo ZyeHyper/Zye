@@ -1,9 +1,38 @@
 /* ============================================================
-   ZYE TEAM OFFICIAL - Core Logic (FULL)
+   ZYE TEAM OFFICIAL - Core Logic (SECURED)
    ============================================================ */
 
-const VALID_KEY = "ZYE-PROXY-TEAM-OFFICIAL";
-const WA_PROOF  = "https://wa.me/628817789861";
+/* ============ SECURITY LAYER ============ */
+const _h1 = "49541a466706dff8";
+const _h2 = "70bae61911081749";
+const _h3 = "8e47f27d8ac6f225";
+const _h4 = "7bf64606b689c1da";
+
+async function hashSHA256(str){
+  try{
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf))
+      .map(function(b){ return b.toString(16).padStart(2, "0"); })
+      .join("");
+  }catch(e){
+    return "";
+  }
+}
+
+function assembleHash(){
+  return _h1 + _h2 + _h3 + _h4;
+}
+
+async function isKeyValid(input){
+  if(!input || !input.trim()) return false;
+  const normalized = input.trim().toUpperCase().replace(/\s+/g, "");
+  const userHash = await hashSHA256(normalized);
+  const expectedHash = assembleHash();
+  return userHash === expectedHash;
+}
+
+/* ============ STATE ============ */
+const WA_PROOF = "https://wa.me/628817789861";
 
 const state = {
   keyValid: false,
@@ -66,8 +95,8 @@ function initKeySystem(){
 
   if(!keyInput || !validateBtn) return;
 
-  function validateKey(){
-    let v = (keyInput.value || "").trim().toUpperCase().replace(/\s+/g, "").replace(/[^A-Z0-9\-]/g, "");
+  async function validateKey(){
+    const v = (keyInput.value || "").trim();
 
     if(!v){
       keyStatus.textContent = "MASUKKAN KEY TERLEBIH DAHULU";
@@ -75,7 +104,11 @@ function initKeySystem(){
       toast("MASUKKAN KEY TERLEBIH DAHULU");
       return;
     }
-    if(v === VALID_KEY){
+
+    // Validasi via hash — key asli TIDAK ADA di kode
+    const valid = await isKeyValid(v);
+
+    if(valid){
       state.keyValid = true;
       keyStatus.textContent = "KEY VALID — UNLIMITED DEVICE";
       keyStatus.className = "key-status valid";
@@ -99,20 +132,20 @@ function initKeySystem(){
   if(pasteBtn){
     pasteBtn.addEventListener("click", function(){
       try{
-        let text = "";
         if(window.AndroidBridge && window.AndroidBridge.getClipboard){
-          text = window.AndroidBridge.getClipboard();
+          const text = window.AndroidBridge.getClipboard();
+          if(!text || !text.trim()){ toast("Clipboard kosong"); return; }
+          keyInput.value = text.trim();
+          toast("Key ditempel");
         } else if(navigator.clipboard && navigator.clipboard.readText){
           navigator.clipboard.readText().then(function(t){
             if(!t || !t.trim()){ toast("Clipboard kosong"); return; }
             keyInput.value = t.trim();
             toast("Key ditempel");
           });
-          return;
+        } else {
+          toast("Clipboard tidak tersedia");
         }
-        if(!text || !text.trim()){ toast("Clipboard kosong"); return; }
-        keyInput.value = text.trim();
-        toast("Key ditempel");
       }catch(e){ toast("Clipboard kosong"); }
     });
   }
@@ -125,7 +158,7 @@ function initKeySystem(){
   }
 }
 
-/* ============ SOCIAL BUTTONS ============ */
+/* ============ SOCIAL ============ */
 function initSocialButtons(){
   document.querySelectorAll(".social-btn").forEach(function(btn){
     btn.addEventListener("click", function(){
@@ -136,7 +169,7 @@ function initSocialButtons(){
   });
 }
 
-/* ============ CONTROL PANEL TOGGLES ============ */
+/* ============ TOGGLES ============ */
 function initToggles(){
   document.querySelectorAll(".ctrl-card").forEach(function(card){
     card.addEventListener("click", function(){
@@ -150,11 +183,10 @@ function initToggles(){
   });
 }
 
-/* ============ LAUNCH FREE FIRE ============ */
+/* ============ LAUNCH ============ */
 function initLaunch(){
   const launchBtn = document.getElementById("launchBtn");
   if(!launchBtn) return;
-
   launchBtn.addEventListener("click", function(){
     if(window.AndroidBridge && typeof window.AndroidBridge.launchFreeFire === "function"){
       try{
@@ -179,19 +211,16 @@ function updateShizukuUI(){
     statusEl.classList.remove("on");
     return;
   }
-
   if(!window.AndroidBridge.isShizukuInstalled()){
     statusEl.textContent = "BELUM INSTALL";
     statusEl.classList.remove("on");
     return;
   }
-
   if(!window.AndroidBridge.isShizukuRunning()){
     statusEl.textContent = "BELUM AKTIF";
     statusEl.classList.remove("on");
     return;
   }
-
   if(window.AndroidBridge.checkShizukuPermission()){
     statusEl.textContent = "CONNECTED ✓";
     statusEl.classList.add("on");
@@ -210,25 +239,21 @@ window.onShizukuPermissionResult = function(granted){
 function initShizuku(){
   const shizukuBtn = document.getElementById("shizukuBtn");
   if(!shizukuBtn) return;
-
   shizukuBtn.addEventListener("click", function(){
     if(!window.AndroidBridge || !window.AndroidBridge.isShizukuInstalled){
       toast("FITUR INI HANYA DI APK");
       return;
     }
-
     if(!window.AndroidBridge.isShizukuInstalled()){
       toast("SHIZUKU BELUM DIINSTALL");
       if(window.AndroidBridge.openShizukuApp) window.AndroidBridge.openShizukuApp();
       return;
     }
-
     if(!window.AndroidBridge.isShizukuRunning()){
       toast("BUKA SHIZUKU & AKTIFKAN DULU");
       if(window.AndroidBridge.openShizukuApp) window.AndroidBridge.openShizukuApp();
       return;
     }
-
     const result = window.AndroidBridge.requestShizukuPermission();
     if(result === "ALREADY_GRANTED"){
       toast("SHIZUKU SUDAH AKTIF ✓");
@@ -332,7 +357,7 @@ function renderStore(){
   });
 }
 
-/* ============ PURCHASE MODAL ============ */
+/* ============ MODAL ============ */
 function openPurchaseModal(product){
   state.currentProduct = product;
   const modal = document.getElementById("modal");
@@ -354,7 +379,6 @@ function initModal(){
       state.currentProduct = null;
     });
   }
-
   if(modalContinue){
     modalContinue.addEventListener("click", function(){
       if(modal) modal.classList.add("hidden");
@@ -433,7 +457,6 @@ function initPaymentButtons(){
       toast("Silakan kirim bukti pembayaran");
     });
   }
-
   if(proofBtn){
     proofBtn.addEventListener("click", function(){
       if(state.timeLeft <= 0) return;
@@ -446,7 +469,6 @@ function initPaymentButtons(){
       openExternal(WA_PROOF + "?text=" + encodeURIComponent(msg));
     });
   }
-
   if(backStoreBtn){
     backStoreBtn.addEventListener("click", function(){
       stopPaymentTimer();
@@ -464,19 +486,17 @@ function initBottomNav(){
   });
 }
 
-/* ============ VIDEO AUTOPLAY ============ */
+/* ============ VIDEO ============ */
 function initVideo(){
   const video = document.getElementById("bgVideo");
   if(!video) return;
   video.muted = true;
   video.setAttribute("muted", "");
   video.setAttribute("playsinline", "");
-
   const tryPlay = function(){
     const p = video.play();
     if(p !== undefined) p.catch(function(){});
   };
-
   tryPlay();
   video.addEventListener("loadeddata", tryPlay);
   video.addEventListener("canplay", tryPlay);
@@ -485,19 +505,18 @@ function initVideo(){
   setInterval(tryPlay, 3000);
 }
 
-/* ============ INIT ALL ============ */
+/* ============ INIT ============ */
 window.addEventListener("load", function(){
-  try { initKeySystem(); } catch(e){ console.log("initKeySystem error:", e); }
-  try { initSocialButtons(); } catch(e){ console.log("initSocial error:", e); }
-  try { initToggles(); } catch(e){ console.log("initToggles error:", e); }
-  try { initLaunch(); } catch(e){ console.log("initLaunch error:", e); }
-  try { initShizuku(); } catch(e){ console.log("initShizuku error:", e); }
-  try { renderStore(); } catch(e){ console.log("renderStore error:", e); }
-  try { initModal(); } catch(e){ console.log("initModal error:", e); }
-  try { initPaymentButtons(); } catch(e){ console.log("initPayment error:", e); }
-  try { initBottomNav(); } catch(e){ console.log("initBottomNav error:", e); }
-  try { initVideo(); } catch(e){ console.log("initVideo error:", e); }
-  try { go("page-key"); } catch(e){ console.log("go error:", e); }
-
-  console.log("ZYE TEAM OFFICIAL - Loaded");
+  try { initKeySystem(); } catch(e){ console.log("initKeySystem:", e); }
+  try { initSocialButtons(); } catch(e){ console.log("initSocial:", e); }
+  try { initToggles(); } catch(e){ console.log("initToggles:", e); }
+  try { initLaunch(); } catch(e){ console.log("initLaunch:", e); }
+  try { initShizuku(); } catch(e){ console.log("initShizuku:", e); }
+  try { renderStore(); } catch(e){ console.log("renderStore:", e); }
+  try { initModal(); } catch(e){ console.log("initModal:", e); }
+  try { initPaymentButtons(); } catch(e){ console.log("initPayment:", e); }
+  try { initBottomNav(); } catch(e){ console.log("initBottomNav:", e); }
+  try { initVideo(); } catch(e){ console.log("initVideo:", e); }
+  try { go("page-key"); } catch(e){ console.log("go:", e); }
+  console.log("ZYE TEAM OFFICIAL - Loaded (Secured)");
 });
