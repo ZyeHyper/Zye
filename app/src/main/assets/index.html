@@ -2,175 +2,476 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="theme-color" content="#000000" />
 <title>ZYE TEAM OFFICIAL</title>
-<link rel="stylesheet" href="style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*,*::before,*::after{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  height:100%;
+  overflow-x:hidden;
+}
+
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  background:#000;
+  color:#fff;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  position:relative;
+}
+
+/* ============================================================
+   BACKGROUND EFFECT
+   ============================================================ */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 50% 100%, rgba(255,255,255,0.04) 0%, transparent 60%);
+  pointer-events:none;
+  z-index:0;
+}
+
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;
+  z-index:0;
+  mask-image:radial-gradient(circle at center, black 40%, transparent 80%);
+  -webkit-mask-image:radial-gradient(circle at center, black 40%, transparent 80%);
+}
+
+/* ============================================================
+   CARD CONTAINER
+   ============================================================ */
+.card{
+  position:relative;
+  z-index:1;
+  width:100%;
+  max-width:420px;
+  background:rgba(15,15,15,0.6);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:28px;
+  padding:40px 28px 32px;
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.8),
+    0 0 0 1px rgba(255,255,255,0.03) inset,
+    0 1px 0 rgba(255,255,255,0.08) inset;
+  text-align:center;
+  animation:cardEnter .8s cubic-bezier(.22,.61,.36,1);
+}
+
+@keyframes cardEnter{
+  from{
+    opacity:0;
+    transform:translateY(20px) scale(0.98);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+.card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:20%;
+  right:20%;
+  height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  border-radius:1px;
+}
+
+/* ============================================================
+   LOGO
+   ============================================================ */
+.logo-wrap{
+  position:relative;
+  width:120px;
+  height:120px;
+  margin:0 auto 24px;
+}
+
+.logo-glow{
+  position:absolute;
+  inset:-15px;
+  background:radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+  border-radius:50%;
+  animation:glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse{
+  0%,100%{ opacity:0.5; transform:scale(1); }
+  50%{ opacity:1; transform:scale(1.1); }
+}
+
+.logo-ring{
+  position:absolute;
+  inset:-4px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,0.15);
+  border-top-color:rgba(255,255,255,0.8);
+  animation:ringSpin 6s linear infinite;
+}
+
+@keyframes ringSpin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+.logo{
+  position:relative;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:50%;
+  border:3px solid rgba(255,255,255,0.9);
+  box-shadow:
+    0 0 30px rgba(255,255,255,0.2),
+    0 8px 30px rgba(0,0,0,0.6);
+  background:#111;
+  display:block;
+}
+
+/* ============================================================
+   TITLE
+   ============================================================ */
+.title{
+  font-size:32px;
+  font-weight:900;
+  letter-spacing:-1.2px;
+  line-height:1.05;
+  background:linear-gradient(180deg, #ffffff 0%, #b8b8b8 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:8px;
+  text-transform:uppercase;
+}
+
+.subtitle{
+  font-size:10px;
+  letter-spacing:5px;
+  color:#666;
+  text-transform:uppercase;
+  font-weight:700;
+  margin-bottom:32px;
+}
+
+.divider{
+  width:50px;
+  height:2px;
+  background:linear-gradient(90deg, transparent, #fff, transparent);
+  margin:0 auto 30px;
+  border-radius:2px;
+  box-shadow:0 0 14px rgba(255,255,255,0.5);
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  padding:18px 24px;
+  border:none;
+  border-radius:16px;
+  font-family:inherit;
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  cursor:pointer;
+  text-decoration:none;
+  transition:all .25s cubic-bezier(.22,.61,.36,1);
+  user-select:none;
+  position:relative;
+  overflow:hidden;
+  margin-bottom:14px;
+}
+
+.btn:last-child{margin-bottom:0}
+
+/* Primary — White Solid */
+.btn-primary{
+  background:linear-gradient(180deg, #ffffff 0%, #e0e0e0 100%);
+  color:#000;
+  box-shadow:
+    0 8px 24px rgba(255,255,255,0.18),
+    0 2px 6px rgba(0,0,0,0.4);
+}
+
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 12px 32px rgba(255,255,255,0.25),
+    0 4px 10px rgba(0,0,0,0.5);
+}
+
+.btn-primary:active{
+  transform:translateY(0) scale(0.98);
+}
+
+/* Ghost — Outline */
+.btn-ghost{
+  background:rgba(255,255,255,0.04);
+  color:#fff;
+  border:1.5px solid rgba(255,255,255,0.25);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+.btn-ghost:hover{
+  background:rgba(255,255,255,0.09);
+  border-color:rgba(255,255,255,0.5);
+  transform:translateY(-2px);
+}
+
+.btn-ghost:active{
+  transform:translateY(0) scale(0.98);
+  background:rgba(255,255,255,0.12);
+}
+
+/* Dashed — Accent untuk GET KEY */
+.btn-dashed{
+  background:rgba(255,255,255,0.02);
+  color:#fff;
+  border:1.5px dashed rgba(255,255,255,0.35);
+}
+
+.btn-dashed:hover{
+  background:rgba(255,255,255,0.08);
+  border-color:rgba(255,255,255,0.7);
+  border-style:solid;
+  transform:translateY(-2px);
+}
+
+.btn-dashed:active{
+  transform:translateY(0) scale(0.98);
+}
+
+.btn svg{
+  width:18px;
+  height:18px;
+  flex-shrink:0;
+}
+
+.btn::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transition:left .6s;
+}
+
+.btn:hover::before{
+  left:100%;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer{
+  margin-top:30px;
+  padding-top:20px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  font-size:10.5px;
+  color:#555;
+  letter-spacing:1.5px;
+  font-weight:600;
+}
+
+.footer span{
+  color:#999;
+  font-weight:700;
+}
+
+/* ============================================================
+   DECORATION DOTS
+   ============================================================ */
+.dots{
+  display:flex;
+  justify-content:center;
+  gap:6px;
+  margin-top:16px;
+}
+
+.dot{
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.2);
+}
+
+.dot.active{
+  background:#fff;
+  box-shadow:0 0 8px rgba(255,255,255,0.8);
+  animation:dotPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes dotPulse{
+  0%,100%{opacity:1}
+  50%{opacity:0.5}
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:400px){
+  .card{padding:32px 22px 26px;border-radius:24px}
+  .title{font-size:26px}
+  .logo-wrap{width:100px;height:100px;margin-bottom:20px}
+  .subtitle{font-size:9px;letter-spacing:4px;margin-bottom:26px}
+  .btn{padding:16px 20px;font-size:12px;letter-spacing:1.5px}
+}
+
+/* ============================================================
+   FLOATING DOTS
+   ============================================================ */
+.float-dot{
+  position:fixed;
+  width:3px;
+  height:3px;
+  background:#fff;
+  border-radius:50%;
+  opacity:0.15;
+  pointer-events:none;
+  z-index:0;
+  animation:floatMove 20s infinite linear;
+}
+
+@keyframes floatMove{
+  0%{ transform:translate(0, 0); opacity:0; }
+  10%{opacity:0.3}
+  90%{opacity:0.3}
+  100%{
+    transform:translate(var(--dx, 100px), var(--dy, -100vh));
+    opacity:0;
+  }
+}
+</style>
 </head>
 <body>
 
-<video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto">
-  <source src="https://upload.zireku.com/get/QLbx5D.mp4" type="video/mp4" />
-</video>
-<div class="bg-overlay"></div>
-<div id="toast" class="toast"></div>
+<!-- Floating dots -->
+<div class="float-dot" style="left:10%;top:100%;--dx:40px;--dy:-120vh;animation-delay:0s"></div>
+<div class="float-dot" style="left:30%;top:100%;--dx:-30px;--dy:-120vh;animation-delay:3s"></div>
+<div class="float-dot" style="left:50%;top:100%;--dx:60px;--dy:-120vh;animation-delay:6s"></div>
+<div class="float-dot" style="left:70%;top:100%;--dx:-50px;--dy:-120vh;animation-delay:9s"></div>
+<div class="float-dot" style="left:90%;top:100%;--dx:20px;--dy:-120vh;animation-delay:12s"></div>
 
-<div class="app-shell">
+<!-- ============================================================
+     MAIN CARD
+     ============================================================ -->
+<div class="card">
 
-  <!-- PAGE 1: KEY SYSTEM -->
-  <section id="page-key" class="page active">
-    <div class="page-content">
-      <div class="brand">
-        <div class="brand-badge">
-          <img src="logo.png" alt="ZYE" />
-        </div>
-        <h1 class="brand-title">ZYE TEAM OFFICIAL</h1>
-        <p class="brand-sub">PREMIUM ACCESS SYSTEM</p>
-      </div>
-
-      <div class="glass-card key-card">
-        <label class="field-label">ENTER YOUR KEY</label>
-        <input id="keyInput" class="text-input" type="text" placeholder="Masukkan Key" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" />
-        <button id="pasteBtn" class="btn btn-ghost">PASTE KEY</button>
-        <button id="validateBtn" class="btn btn-primary">VALIDASI KEY</button>
-        <div id="keyStatus" class="key-status"></div>
-        <button id="continueBtn" class="btn btn-continue hidden">LANJUT →</button>
-      </div>
-
-      <div class="social-row">
-        <a class="social-btn" data-url="https://whatsapp.com/channel/0029Vb72gOz4dTnLFa0Gen0G" href="javascript:void(0)">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20.52 3.48A11.9 11.9 0 0012 0C5.37 0 0 5.37 0 12c0 2.11.55 4.17 1.6 5.98L0 24l6.2-1.62A11.94 11.94 0 0012 24c6.63 0 12-5.37 12-12 0-3.2-1.25-6.21-3.48-8.52z"/></svg>
-          <span>WHATSAPP</span>
-        </a>
-        <a class="social-btn" data-url="https://tiktok.com/@zyehyper" href="javascript:void(0)">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M16.5 3a5.5 5.5 0 004.5 4.5v3a8.5 8.5 0 01-4.5-1.4v6.4a6.5 6.5 0 11-6.5-6.5c.34 0 .67.03 1 .09v3.16a3.5 3.5 0 102.5 3.25V3h3z"/></svg>
-          <span>TIKTOK</span>
-        </a>
-        <a class="social-btn" data-url="https://t.me/KAIZYE_STORE" href="javascript:void(0)">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
-          <span>TELEGRAM</span>
-        </a>
-      </div>
-    </div>
-    <footer class="app-footer">©ZyeCitedz</footer>
-  </section>
-
-  <!-- PAGE 2: CONTROL PANEL -->
-  <section id="page-home" class="page">
-    <div class="page-content">
-      <div class="page-head">
-        <h2 class="page-title">ZYE TEAM OFFICIAL</h2>
-        <p class="page-sub">CONTROL PANEL</p>
-      </div>
-
-      <div class="ctrl-grid">
-        <div class="ctrl-card" data-key="aimlock">
-          <div class="ctrl-top"><span class="ctrl-name">AIMLOCK</span><span class="ctrl-state">OFF</span></div>
-          <div class="switch"><div class="knob"></div></div>
-        </div>
-        <div class="ctrl-card" data-key="esp">
-          <div class="ctrl-top"><span class="ctrl-name">ESP</span><span class="ctrl-state">OFF</span></div>
-          <div class="switch"><div class="knob"></div></div>
-        </div>
-        <div class="ctrl-card" data-key="bodyhs">
-          <div class="ctrl-top"><span class="ctrl-name">BODY HS</span><span class="ctrl-state">OFF</span></div>
-          <div class="switch"><div class="knob"></div></div>
-        </div>
-      </div>
-
-      <button id="launchBtn" class="btn btn-launch">LAUNCH</button>
-
-      <div class="glass-card shizuku-card">
-        <div class="row-between">
-          <span class="ctrl-name">SHIZUKU STATUS</span>
-          <span id="shizukuState" class="pill">NOT CONNECTED</span>
-        </div>
-        <button id="shizukuBtn" class="btn btn-ghost">REQUEST SHIZUKU</button>
-      </div>
-    </div>
-    <footer class="app-footer">©ZyeCitedz</footer>
-  </section>
-
-  <!-- PAGE 3: STORE -->
-  <section id="page-store" class="page">
-    <div class="page-content">
-      <div class="page-head">
-        <h2 class="page-title">ZYE TEAM STORE</h2>
-        <p class="page-sub">PREMIUM FILE &amp; MODULE</p>
-      </div>
-      <div id="storeList" class="store-list"></div>
-    </div>
-    <footer class="app-footer">©ZyeCitedz</footer>
-  </section>
-
-  <!-- PAGE 4: INFO -->
-  <section id="page-info" class="page">
-    <div class="page-content">
-      <div class="page-head">
-        <h2 class="page-title">ZYE TEAM OFFICIAL</h2>
-        <p class="page-sub">OFFICIAL INFORMATION CENTER</p>
-      </div>
-      <div class="glass-card info-card">
-        <a class="social-btn wide" data-url="https://whatsapp.com/channel/0029Vb72gOz4dTnLFa0Gen0G" href="javascript:void(0)"><span>WHATSAPP</span></a>
-        <a class="social-btn wide" data-url="https://tiktok.com/@zyehyper" href="javascript:void(0)"><span>TIKTOK</span></a>
-        <a class="social-btn wide" data-url="https://t.me/KAIZYE_STORE" href="javascript:void(0)"><span>TELEGRAM</span></a>
-      </div>
-    </div>
-    <footer class="app-footer">©ZyeCitedz</footer>
-  </section>
-
-  <!-- PAGE 5: PAYMENT -->
-  <section id="page-pay" class="page">
-    <div class="page-content">
-      <div class="page-head">
-        <h2 class="page-title">SCAN QR TO PAY</h2>
-        <p class="page-sub" id="payProduct">—</p>
-      </div>
-      <div class="glass-card pay-card">
-        <div class="qr-wrap">
-          <img src="https://upload.zireku.com/get/eSiZqD.jpg" alt="QR Payment" class="qr-img" onerror="this.style.opacity='0.15'" />
-        </div>
-        <div class="timer" id="payTimer">05:00</div>
-        <p class="muted small">TIME LIMIT</p>
-        <button id="paidBtn" class="btn btn-primary">SUDAH BAYAR</button>
-        <button id="proofBtn" class="btn btn-ghost">KIRIM BUKTI PEMBAYARAN</button>
-        <button id="backStoreBtn" class="btn btn-ghost">← KEMBALI</button>
-      </div>
-    </div>
-    <footer class="app-footer">©ZyeCitedz</footer>
-  </section>
-
-  <!-- BOTTOM NAV -->
-  <nav id="bottomNav" class="bottom-nav hidden">
-    <button class="nav-btn active" data-page="page-home">
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/></svg>
-      <span>HOME</span>
-    </button>
-    <button class="nav-btn" data-page="page-store">
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M4 4h16l-1.5 12H5.5zM6 20a2 2 0 104 0 2 2 0 00-4 0zm8 0a2 2 0 104 0 2 2 0 00-4 0z"/></svg>
-      <span>STORE</span>
-    </button>
-    <button class="nav-btn" data-page="page-info">
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9a10 10 0 100 20 10 10 0 000-20z"/></svg>
-      <span>INFO</span>
-    </button>
-  </nav>
-
-</div>
-
-<!-- MODAL -->
-<div id="modal" class="modal hidden">
-  <div class="modal-card">
-    <h3 class="modal-title">CONFIRM PURCHASE</h3>
-    <div class="modal-body">
-      <div class="modal-line"><span>Produk</span><b id="modalName">—</b></div>
-      <div class="modal-line"><span>Harga</span><b id="modalPrice">—</b></div>
-    </div>
-    <button id="modalContinue" class="btn btn-primary">CONTINUE PAYMENT</button>
-    <button id="modalCancel" class="btn btn-ghost">CANCEL</button>
+  <!-- Logo -->
+  <div class="logo-wrap">
+    <div class="logo-glow"></div>
+    <div class="logo-ring"></div>
+    <img
+      src="https://upload.zireku.com/get/aUd9hV.jpg"
+      alt="ZYE TEAM OFFICIAL"
+      class="logo"
+      onerror="this.style.background='#1a1a1a'; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text x=%2250%22 y=%2260%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22%23666%22 font-family=%22Inter,sans-serif%22 font-weight=%22900%22>Z</text></svg>'"
+    />
   </div>
+
+  <!-- Title -->
+  <h1 class="title">ZYE TEAM<br>OFFICIAL</h1>
+  <div class="subtitle">Premium Access System</div>
+  <div class="divider"></div>
+
+  <!-- BUTTON 1: GET KEY FREE -->
+  <a
+    href="https://sfl.gl/5bA4Sp"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="btn btn-primary"
+  >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+    </svg>
+    GET KEY FREE
+  </a>
+
+  <!-- BUTTON 2: BUY KEY VIP -->
+  <a
+    href="https://wa.me/628817789861?text=Halo%20Admin%20ZYE%20TEAM%20OFFICIAL%2C%20saya%20mau%20buy%20key%20VIP"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="btn btn-ghost"
+  >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <path d="M16 10a4 4 0 0 1-8 0"/>
+    </svg>
+    BUY KEY VIP
+  </a>
+
+  <!-- BUTTON 3: GET KEY (BARU) -->
+  <a
+    href="https://get-key-proxy.vercel.app/"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="btn btn-dashed"
+  >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 7a5 5 0 0 1 0 10"/>
+      <circle cx="8" cy="12" r="4"/>
+      <path d="M18 12h3"/>
+    </svg>
+    GET KEY
+  </a>
+
+  <!-- Decoration -->
+  <div class="dots">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    © <span>ZyeCitedz</span>
+  </div>
+
 </div>
 
-<script src="script.js"></script>
 </body>
 </html>
