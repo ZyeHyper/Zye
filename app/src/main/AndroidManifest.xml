@@ -15,7 +15,8 @@
         android:hardwareAccelerated="true"
         android:usesCleartextTraffic="true"
         android:label="ZYE TEAM OFFICIAL"
-        android:icon="@android:drawable/sym_def_app_icon"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
         android:theme="@style/AppTheme">
 
         <activity
@@ -29,7 +30,7 @@
             </intent-filter>
         </activity>
 
-        <!-- Shizuku Provider — WAJIB untuk komunikasi -->
+        <!-- Shizuku Provider -->
         <provider
             android:name="rikka.shizuku.ShizukuProvider"
             android:authorities="${applicationId}.shizuku"
