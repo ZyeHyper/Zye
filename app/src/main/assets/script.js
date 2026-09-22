@@ -1,5 +1,5 @@
 /* ============================================================
-   ZYE TEAM OFFICIAL - Core Logic (SECURED)
+   ZYE TEAM OFFICIAL - Core Logic (SECURED + AUDIO)
    ============================================================ */
 
 /* ============ SECURITY LAYER ============ */
@@ -494,23 +494,78 @@ function initBottomNav(){
   });
 }
 
-/* ============ VIDEO ============ */
+/* ============ VIDEO + AUDIO CONTROL ============ */
 function initVideo(){
   const video = document.getElementById("bgVideo");
+  const muteBtn = document.getElementById("muteBtn");
+  const muteIcon = document.getElementById("muteIcon");
   if(!video) return;
+
+  // Setup video properties
   video.muted = true;
   video.setAttribute("muted", "");
   video.setAttribute("playsinline", "");
+  video.setAttribute("webkit-playsinline", "");
+  video.loop = true;
+  video.volume = 1.0;
+
+  let soundEnabled = false;
+
+  // Play video (muted — ini yang diizinkan autoplay)
   const tryPlay = function(){
     const p = video.play();
     if(p !== undefined) p.catch(function(){});
   };
+
   tryPlay();
   video.addEventListener("loadeddata", tryPlay);
   video.addEventListener("canplay", tryPlay);
-  document.addEventListener("touchstart", tryPlay);
-  document.addEventListener("click", tryPlay);
   setInterval(tryPlay, 3000);
+
+  // Fungsi enable sound
+  function enableSound(){
+    if(soundEnabled) return;
+    video.muted = false;
+    video.volume = 1.0;
+    const p = video.play();
+    if(p !== undefined){
+      p.then(function(){
+        soundEnabled = true;
+        if(muteIcon) muteIcon.textContent = "🔊";
+        if(muteBtn) muteBtn.classList.add("on");
+      }).catch(function(){});
+    } else {
+      soundEnabled = true;
+      if(muteIcon) muteIcon.textContent = "🔊";
+      if(muteBtn) muteBtn.classList.add("on");
+    }
+  }
+
+  // AUTO UNMUTE — kapan pun user tap di mana saja
+  document.addEventListener("touchstart", enableSound, { passive:true });
+  document.addEventListener("click", enableSound);
+  document.addEventListener("scroll", enableSound, { passive:true });
+  document.addEventListener("keydown", enableSound);
+
+  // Toggle manual via tombol mute
+  if(muteBtn){
+    muteBtn.addEventListener("click", function(e){
+      e.stopPropagation();
+      if(soundEnabled){
+        video.muted = true;
+        soundEnabled = false;
+        if(muteIcon) muteIcon.textContent = "🔇";
+        if(muteBtn) muteBtn.classList.remove("on");
+        toast("🔇 SUARA MATI");
+      } else {
+        enableSound();
+        toast("🔊 SUARA AKTIF");
+      }
+    });
+  }
+
+  // Coba auto unmute setelah 2 detik (kadang berhasil di beberapa HP)
+  setTimeout(enableSound, 2000);
 }
 
 /* ============ INIT ============ */
@@ -526,5 +581,5 @@ window.addEventListener("load", function(){
   try { initBottomNav(); } catch(e){ console.log("initBottomNav:", e); }
   try { initVideo(); } catch(e){ console.log("initVideo:", e); }
   try { go("page-key"); } catch(e){ console.log("go:", e); }
-  console.log("ZYE TEAM OFFICIAL - Loaded (Secured)");
+  console.log("ZYE TEAM OFFICIAL - Loaded (Secured + Audio)");
 });
